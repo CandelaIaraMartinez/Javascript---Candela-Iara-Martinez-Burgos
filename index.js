@@ -1,6 +1,6 @@
 class Catalogo{
-    constructor(objeto, precio, cantidad){
-        this.objeto = objeto;
+    constructor(nombre, precio, cantidad){
+        this.nombre = nombre;
         this.precio = parseInt(precio);
         this.cantidad = parseInt(cantidad);
     }
@@ -24,35 +24,47 @@ catalogo.push(new Catalogo("Top Negro", "700", "10"))
 catalogo.push(new Catalogo("Short de Jean", "900", "23"))
 catalogo.push(new Catalogo("Buzo Oversize", "2500", "13"))
 
-const compra = [];
+function crearMensaje (){
+    let mensaje = 'Que producto desea comprar?'
+    let count = 1
 
-seleccionarProducto();
-
-function seleccionarProducto(){
-    let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 0. Top Negro \n 1. Short de Jean \n 2. Buzo Oversize"));
-    catalogo[producto].vender();
-    compra.push(catalogo[producto].objeto, catalogo[producto].precio);
-    let consulta = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
-    while (consulta == 1){
-        seleccionarProducto();
-    }
+for(let producto of catalogo){
+    mensaje += `\n${count}. ${producto.nombre} - $ ${producto.precio}`
+    count++
 }
 
-for (producto in compra){
-    alert("Sus productos y precios seleccionados son: " + compra[producto]);
+mensaje += `\n${count}. Salir`
+
+return mensaje
 }
 
-let total = 0;
-
-calcularMonto();
-
-function calcularMonto(){
-    for (producto in compra) {
-        total += compra[producto].precio;
-    }
-    alert("El total de su compra es de: "+ total);
-    return total
+function cantidad (producto){
+    return prompt(`Cuantas unidades de ${producto.nombre} desea comprar?`);
 }
+
+function subtotal (cantidad, producto){
+    alert(`Compro ${cantidad} unidad de ${producto.nombre} por $ ${cantidad * producto.precio}`)
+    return cantidad * producto.precio;
+}
+
+function calcularTotal (arr){
+    return arr.reduce((acc, el) => acc + el, 0)
+}
+
+let opcion = 0
+let total = []
+
+do {
+    opcion = parseInt(prompt(crearMensaje()))
+
+    if(opcion === catalogo.length + 1){
+        alert(`Su total fue de $ ${calcularTotal(total)}.`)
+    break
+}
+
+    total.push(subtotal(cantidad(catalogo[opcion - 1]), catalogo[opcion - 1]))
+
+} while (true)
 
 function pagoCuotas(){
     let montoCuota = total / 3; 
