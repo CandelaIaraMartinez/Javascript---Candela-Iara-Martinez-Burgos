@@ -1,7 +1,7 @@
 class Catalogo{
     constructor(objeto, precio, cantidad){
         this.objeto = objeto;
-        this.precio = parseFloat(precio);
+        this.precio = parseInt(precio);
         this.cantidad = parseInt(cantidad);
     }
 
@@ -26,6 +26,8 @@ catalogo.push(new Catalogo("Buzo Oversize", "2500", "13"))
 
 const compra = [];
 
+seleccionarProducto();
+
 function seleccionarProducto(){
     let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 0. Top Negro \n 1. Short de Jean \n 2. Buzo Oversize"));
     catalogo[producto].vender();
@@ -36,18 +38,18 @@ function seleccionarProducto(){
     }
 }
 
-seleccionarProducto();
-
-compra.forEach((producto) => {
-    console.log(`Sus productos seleccionados son: ${compra[producto].objeto}`)
-})
-
-calcularMonto();
+for (producto in compra){
+    alert("Sus productos y precios seleccionados son: " + compra[producto]);
+}
 
 let total = 0;
 
+calcularMonto();
+
 function calcularMonto(){
-    for (producto of compra) total += compra.producto.precio;
+    for (producto in compra) {
+        total += compra[producto].precio;
+    }
     alert("El total de su compra es de: "+ total);
     return total
 }
