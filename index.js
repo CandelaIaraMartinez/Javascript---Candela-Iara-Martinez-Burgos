@@ -1,8 +1,8 @@
-class Catálogo{
+class Catalogo{
     constructor(objeto, precio, cantidad){
-        this.cantidad = parseInt(cantidad);
         this.objeto = objeto;
         this.precio = parseFloat(precio);
+        this.cantidad = parseInt(cantidad);
     }
 
 vender(){
@@ -12,24 +12,24 @@ vender(){
         alert("No contamos con stock del producto actualmente")
     }
 }
-}
 
 disminuirStock = (cantidadADisminuir) =>
     (this.cantidad = this.cantidad - cantidadADisminuir);
 aumentarStock = (cantidadAAumentar) =>
     (this.cantidad = this.cantidad + cantidadAAumentar);
+}
 
-const catálogo = [];
-catálogo.push(new Catálogo("10", "Top Negro", "700"))
-catálogo.push(new Catálogo("23", "Short de Jean", "900"))
-catálogo.push(new Catálogo("13", "Buzo Oversize", "2500"))
+const catalogo = [];
+catalogo.push(new Catalogo("Top Negro", "700", "10"))
+catalogo.push(new Catalogo("Short de Jean", "900", "23"))
+catalogo.push(new Catalogo("Buzo Oversize", "2500", "13"))
 
 const compra = [];
 
 function seleccionarProducto(){
     let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 1. Top Negro \n 2. Short de Jean \n 3. Buzo Oversize"));
-    vender()
-    compra.push(producto.Catálogo)
+    catalogo[producto - 1].vender();
+    compra.push(producto.catalogo);
     let compra = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
     while (compra == 1){
         seleccionarProducto();
