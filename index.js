@@ -27,27 +27,30 @@ catalogo.push(new Catalogo("Buzo Oversize", "2500", "13"))
 const compra = [];
 
 function seleccionarProducto(){
-    let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 1. Top Negro \n 2. Short de Jean \n 3. Buzo Oversize"));
-    catalogo[producto - 1].vender();
-    compra.push(producto.catalogo);
-    let compra = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
-    while (compra == 1){
+    let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 0. Top Negro \n 1. Short de Jean \n 2. Buzo Oversize"));
+    catalogo[producto].vender();
+    compra.push(catalogo[producto.objeto], catalogo[producto.precio]);
+    let consulta = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
+    while (consulta == 1){
         seleccionarProducto();
     }
-    alert("Sus productos seleccionados son:" + compra.join(","))
 }
 
 seleccionarProducto();
 
+compra.forEach((producto) => {
+    alert(`Sus productos seleccionados son: ${compra.objeto}`)
+})
+
+calcularMonto();
+
 let total = 0;
 
-function calcularMonto(producto){
+function calcularMonto(){
     for (producto of compra) total += compra.producto.precio;
     alert("El total de su compra es de: "+ total);
     return total
 }
-
-calcularMonto(producto);
 
 function pagoCuotas(){
     let montoCuota = total / 3; 
