@@ -1,36 +1,53 @@
 class Catálogo{
-    constructor(objeto, precio, id){
-        this.id = parseInt(id);
+    constructor(objeto, precio, cantidad){
+        this.cantidad = parseInt(cantidad);
         this.objeto = objeto;
         this.precio = parseFloat(precio);
-        this.disponible = true;
+    }
+
+vender(){
+    if (this.cantidad > 0){
+        this.disminuirStock(1);
+    } else {
+        alert("No contamos con stock del producto actualmente")
     }
 }
+}
+
+disminuirStock = (cantidadADisminuir) =>
+    (this.cantidad = this.cantidad - cantidadADisminuir);
+aumentarStock = (cantidadAAumentar) =>
+    (this.cantidad = this.cantidad + cantidadAAumentar);
 
 const catálogo = [];
+catálogo.push(new Catálogo("10", "Top Negro", "700"))
+catálogo.push(new Catálogo("23", "Short de Jean", "900"))
+catálogo.push(new Catálogo("13", "Buzo Oversize", "2500"))
 
-catálogo.push(new Catálogo("1", "top negro", "700"))
-catálogo.push(new Catálogo("2", "short de jean", "900"))
-catálogo.push(new Catálogo("3", "buzo oversize", "2500"))
+const compra = [];
 
-let producto1 = parseInt(prompt("Seleccione el producto que desea comprar \n 1. Top Negro \n 2. Short de Jean \n 3. Buzo Oversize"));
-
-let total;
-
-let compra = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
-
-if ((compra == 1)){
-    let producto2 = parseInt(prompt("Seleccione el segundo producto que desea comprar \n 1. Top Negro \n 2. Short de Jean \n 3. Buzo Oversize"));
-    function calcularMonto(producto1, producto2){
-        let index1 = catálogo.id.indexOf(producto1); 
-        let index2 = catálogo.id.indexOf(producto2);
-        let total = catálogo.precio(index1) + catálogo.precio(index2);
-        alert("El total de su compra es de: "+ total);
-        return total
+function seleccionarProducto(){
+    let producto = parseInt(prompt("Seleccione el producto que desea comprar \n 1. Top Negro \n 2. Short de Jean \n 3. Buzo Oversize"));
+    vender()
+    compra.push(producto.Catálogo)
+    let compra = parseInt(prompt("¿Le gustaría continuar comprando? \n 1. Si \n 2. No"));
+    while (compra == 1){
+        seleccionarProducto();
     }
-} else {
-    alert("Sería un total de" + catálogo.precio(index1));
+    alert("Sus productos seleccionados son:" + compra.join(","))
 }
+
+seleccionarProducto();
+
+let total = 0;
+
+function calcularMonto(producto){
+    for (producto of compra) total += compra.producto.precio;
+    alert("El total de su compra es de: "+ total);
+    return total
+}
+
+calcularMonto(producto);
 
 function pagoCuotas(){
     let montoCuota = total / 3; 
