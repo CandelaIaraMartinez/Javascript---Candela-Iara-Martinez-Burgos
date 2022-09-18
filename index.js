@@ -1,5 +1,6 @@
 class Catalogo{
-    constructor(nombre, precio, cantidad){
+    constructor(id, nombre, precio, cantidad){
+        this.id = id;
         this.nombre = nombre;
         this.precio = parseInt(precio);
         this.cantidad = parseInt(cantidad);
@@ -20,9 +21,29 @@ aumentarStock = (cantidadAAumentar) =>
 }
 
 const catalogo = [];
-catalogo.push(new Catalogo("Top Negro", "700", "10"))
-catalogo.push(new Catalogo("Short de Jean", "900", "23"))
-catalogo.push(new Catalogo("Buzo Oversize", "2500", "13"))
+catalogo.push(new Catalogo("1", "Top Negro", "700", "10"))
+catalogo.push(new Catalogo("2", "Short de Jean", "900", "23"))
+catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));
+
+const contenedorProductos = document.getElementById("contenedor-productos");
+
+catalogo.forEach((producto) => {
+    let column = document.createElement("div");
+    column.className = "col-md-4 mt-3";
+    column.id = `columna-${producto.id}`
+    column.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Nombre:<b>${producto.nombre}</b></p>
+                <p class="card-text">Precio:<b>${producto.precio}</b></p>
+                <p class="card-text">Cantidad:<b>${producto.cantidad}</b></p>
+            </div>
+        </div>
+    `
+    contenedorProductos.append(column)
+});
+
+let carrito = [];
 
 function crearMensaje (){
     let mensaje = 'Que producto desea comprar?'
@@ -42,9 +63,25 @@ function cantidad (producto){
     return prompt(`Cuantas unidades de ${producto.nombre} desea comprar?`);
 }
 
+let titulo = document.createElement("p");
+titulo.innerHTML = "<h1>Carrito de compras</h1>";
+document.body.append(titulo);
+
 function subtotal (cantidad, producto){
     alert(`Compro ${cantidad} unidad de ${producto.nombre} por $ ${cantidad * producto.precio}`)
-    return cantidad * producto.precio;
+    let suma = cantidad * producto.precio;
+    carrito.push(cantidad, producto.nombre, suma);
+    console.log(carrito);
+    carritoFinal();
+    return suma;
+}
+
+function carritoFinal(){
+    let compra = document.createElement("div");
+    compra.innerHTML = `<p>Unidades: ${carrito.cantidad}</p> 
+                        <p>Producto: ${carrito.nombre}</p> 
+                        <p>Precio: $ ${carrito.precioTotal}</p>`;
+    document.body.appendChild(compra);
 }
 
 function calcularTotal (arr){
@@ -55,7 +92,8 @@ let opcion = 0
 let total = []
 
 do {
-    opcion = parseInt(prompt(crearMensaje()))
+    opcion = parseInt(prompt(crearMensaje()));
+    carritoFinal();
 
     if(opcion === catalogo.length + 1){
         alert(`Su total fue de $ ${calcularTotal(total)}.`)
