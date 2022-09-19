@@ -63,25 +63,12 @@ function cantidad (producto){
     return prompt(`Cuantas unidades de ${producto.nombre} desea comprar?`);
 }
 
-let titulo = document.createElement("p");
-titulo.innerHTML = "<h1>Carrito de compras</h1>";
-document.body.append(titulo);
-
 function subtotal (cantidad, producto){
     alert(`Compro ${cantidad} unidad de ${producto.nombre} por $ ${cantidad * producto.precio}`)
     let suma = cantidad * producto.precio;
     carrito.push(cantidad, producto.nombre, suma);
     console.log(carrito);
-    carritoFinal();
     return suma;
-}
-
-function carritoFinal(){
-    let compra = document.createElement("div");
-    compra.innerHTML = `<p>Unidades: ${carrito.cantidad}</p> 
-                        <p>Producto: ${carrito.nombre}</p> 
-                        <p>Precio: $ ${carrito.precioTotal}</p>`;
-    document.body.appendChild(compra);
 }
 
 function calcularTotal (arr){
@@ -93,7 +80,6 @@ let total = []
 
 do {
     opcion = parseInt(prompt(crearMensaje()));
-    carritoFinal();
 
     if(opcion === catalogo.length + 1){
         alert(`Su total fue de $ ${calcularTotal(total)}.`)
@@ -103,6 +89,15 @@ do {
     total.push(subtotal(cantidad(catalogo[opcion - 1]), catalogo[opcion - 1]))
 
 } while (true)
+
+const lista = document.getElementById("lista");
+
+carrito.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    
+    lista.appendChild(li)
+})
 
 function pagoCuotas(){
     let montoCuota = total / 3; 
