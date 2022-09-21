@@ -83,7 +83,7 @@ function calcularTotal(){
     }
 }
 
-const productoExiste = carrito.some((carrito) => carrito.nombre === nombreCatalogo);
+const productoExiste = catalogo.some((inputNombre) => catalogo.nombre === inputNombre);
 
 if (productoExiste) {
     let producto = new Carrito(
