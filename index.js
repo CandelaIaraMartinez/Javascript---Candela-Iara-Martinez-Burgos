@@ -1,3 +1,7 @@
+let formulario;
+let inputNombre;
+let inputCantidad;
+
 class Catalogo{
     constructor(id, nombre, precio, cantidad){
         this.id = id;
@@ -20,16 +24,34 @@ aumentarStock = (cantidadAAumentar) =>
     (this.cantidad = this.cantidad + cantidadAAumentar);
 }
 
+function inicializarElementos() {
+    formulario = document.getElementById("formulario");
+    inputNombre = document.getElementById("inputNombreProducto");
+    inputCantidad = document.getElementById("inputCantidad");
+    contenedorProductos = document.getElementById("contenedorProductos");
+}
+
+function inicializarEventos() {
+    formulario.onsubmit = (event) => validarFormulario(event);
+}
+
+function validarFormulario(event) {
+    event.preventDefault();
+    let nombre = inputNombre.value;
+    let cantidad = parseInt(inputCantidad.value);
+    vender();
+}
+
 const catalogo = [];
 catalogo.push(new Catalogo("1", "Top Negro", "700", "10"))
 catalogo.push(new Catalogo("2", "Short de Jean", "900", "23"))
 catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));
 
-const contenedorProductos = document.getElementById("contenedor-productos");
+const mostrarProductos = document.getElementById("mostrar-productos");
 
 catalogo.forEach((producto) => {
     let column = document.createElement("div");
-    column.className = "col-md-4 mt-3";
+    column.className = "col-md-3 ml-2 mt-3";
     column.id = `columna-${producto.id}`
     column.innerHTML = `
         <div class="card">
@@ -40,12 +62,11 @@ catalogo.forEach((producto) => {
             </div>
         </div>
     `
-    contenedorProductos.append(column)
+    mostrarProductos.append(column)
 });
 
 class Carrito{
-    constructor(id, nombre, precioTotal, cantidad){
-        this.id = id;
+    constructor(nombre, precioTotal, cantidad){
         this.nombre = nombre;
         this.cantidad = parseInt(cantidad);
         this.precioTotal = parseFloat(precioTotal);
@@ -54,50 +75,30 @@ class Carrito{
 
 let carrito = [];
 
-function crearMensaje (){
-    let mensaje = 'Que producto desea comprar?'
-    let count = 1
-
-for(let producto of catalogo){
-    mensaje += `\n${count}. ${producto.nombre} - $ ${producto.precio}`
-    count++
+function calcularTotal(){
+    for (producto of carrito){
+        if (carrito.nombre = catalogo.nombre){
+            carrito.precioTotal = carrito.cantidad * catalogo.precio;
+        }
+    }
 }
 
-mensaje += `\n${count}. Salir`
+const productoExiste = carrito.some((carrito) => carrito.nombre === nombreCatalogo);
 
-return mensaje
+if (productoExiste) {
+    let producto = new Carrito(
+        nombre,
+        cantidad,
+        calcularTotal(),
+        );
+
+    carrito.push(producto);
+    formulario.reset();
+
+    pintarProductos();
+} else {
+    alert("Ese producto no existe");
 }
-
-function cantidad (producto){
-    return prompt(`Cuantas unidades de ${producto.nombre} desea comprar?`);
-}
-
-function subtotal (cantidad, producto){
-    alert(`Compro ${cantidad} unidad de ${producto.nombre} por $ ${cantidad * producto.precio}`)
-    let suma = cantidad * producto.precio;
-    carrito.push(producto.id, producto.nombre, cantidad, suma);
-    console.log(carrito);
-    return suma;
-}
-
-function calcularTotal (arr){
-    return arr.reduce((acc, el) => acc + el, 0)
-}
-
-let opcion = 0
-let total = []
-
-do {
-    opcion = parseInt(prompt(crearMensaje()));
-
-    if(opcion === catalogo.length + 1){
-        alert(`Su total fue de $ ${calcularTotal(total)}.`)
-    break
-}
-
-    total.push(subtotal(cantidad(catalogo[opcion - 1]), catalogo[opcion - 1]))
-
-} while (true)
 
 const compraFinal = document.getElementById("compra-final");
 
@@ -106,7 +107,6 @@ function mostrarCarrito() {
     carrito.forEach((item) => {
     let column = document.createElement("div");
     column.className = "col-md-4 mt-3";
-    column.id = `columna-${item.id}`;
     column.innerHTML = `
             <div class="card">
                 <div class="card-body">
@@ -120,15 +120,8 @@ function mostrarCarrito() {
                     <b>${item.precioTotal}</b>
                 </p>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-danger" id="botonEliminar-${item.id}" >Eliminar producto</button>
-                </div>
             </div>`;
-
     compraFinal.append(column);
-
-    let botonEliminar = document.getElementById(`botonEliminar-${item.id}`);
-    botonEliminar.onclick = () => eliminarProducto(item.id);
     });
 }
 
