@@ -43,6 +43,15 @@ catalogo.forEach((producto) => {
     contenedorProductos.append(column)
 });
 
+class Carrito{
+    constructor(id, nombre, precioTotal, cantidad){
+        this.id = id;
+        this.nombre = nombre;
+        this.cantidad = parseInt(cantidad);
+        this.precioTotal = parseFloat(precioTotal);
+    };
+}
+
 let carrito = [];
 
 function crearMensaje (){
@@ -66,7 +75,7 @@ function cantidad (producto){
 function subtotal (cantidad, producto){
     alert(`Compro ${cantidad} unidad de ${producto.nombre} por $ ${cantidad * producto.precio}`)
     let suma = cantidad * producto.precio;
-    carrito.push(cantidad, producto.nombre, suma);
+    carrito.push(producto.id, producto.nombre, cantidad, suma);
     console.log(carrito);
     return suma;
 }
@@ -90,14 +99,38 @@ do {
 
 } while (true)
 
-const lista = document.getElementById("lista");
+const compraFinal = document.getElementById("compra-final");
 
-carrito.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    
-    lista.appendChild(li)
-})
+function mostrarCarrito() {
+    compraFinal.innerHTML = "";
+    carrito.forEach((item) => {
+    let column = document.createElement("div");
+    column.className = "col-md-4 mt-3";
+    column.id = `columna-${item.id}`;
+    column.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                <p class="card-text">Nombre:
+                    <b>${item.nombre}</b>
+                </p>
+                <p class="card-text">Cantidad:
+                <b>${item.cantidad}</b>
+                </p>
+                <p class="card-text">Precio:
+                    <b>${item.precioTotal}</b>
+                </p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-danger" id="botonEliminar-${item.id}" >Eliminar producto</button>
+                </div>
+            </div>`;
+
+    compraFinal.append(column);
+
+    let botonEliminar = document.getElementById(`botonEliminar-${item.id}`);
+    botonEliminar.onclick = () => eliminarProducto(item.id);
+    });
+}
 
 function pagoCuotas(){
     let montoCuota = total / 3; 
