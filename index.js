@@ -75,7 +75,7 @@ function validarFormulario(event) {
 
 //Creación del objeto carrito que obtendrá los productos seleccionados por el usuario
 class Carrito{
-    constructor(nombre, precioTotal, cantidad){
+    constructor(nombre, cantidad, precioTotal){
         this.nombre = nombre;
         this.cantidad = parseInt(cantidad);
         this.precioTotal = parseFloat(precioTotal);
@@ -87,8 +87,8 @@ let carrito = [];
 //Calculo del total para utilizar en el array carrito
 function calcularTotal(){
     for (producto of carrito){
-        if (carrito.nombre = catalogo.nombre){
-            carrito.precioTotal = carrito.cantidad * catalogo.precio;
+        if (carrito.nombre == catalogo.nombre){
+                let precioTotal = carrito.cantidad * catalogo.precio;
         }
     }
 }
@@ -99,16 +99,15 @@ function verificarProducto(){
     if (catalogo.some(el => el.nombre == inputNombre)){
         productoExiste = true
         let producto = new Carrito(
-        nombre,
-        cantidad,
-        calcularTotal(),
+        inputNombre,
+        inputCantidad
         );
-
+    calcularTotal();
     carrito.push(producto);
     formulario.reset();
 
     mostrarCarrito();
-
+    consulta();
     return carrito;
 } else {
     alert("Ese producto no existe");
