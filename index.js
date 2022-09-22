@@ -2,6 +2,7 @@ let formulario;
 let inputNombre;
 let inputCantidad;
 
+//Creación del catálogo que contiene las prendas disponibles
 class Catalogo{
     constructor(id, nombre, precio, cantidad){
         this.id = id;
@@ -49,6 +50,7 @@ catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));
 
 const mostrarProductos = document.getElementById("mostrar-productos");
 
+//Creación de las tarjetas para cada producto
 catalogo.forEach((producto) => {
     let column = document.createElement("div");
     column.className = "col-md-3 ml-2 mt-3";
@@ -65,6 +67,7 @@ catalogo.forEach((producto) => {
     mostrarProductos.append(column)
 });
 
+//Creación del objeto carrito que obtendrá los productos seleccionados por el usuario
 class Carrito{
     constructor(nombre, precioTotal, cantidad){
         this.nombre = nombre;
@@ -75,6 +78,7 @@ class Carrito{
 
 let carrito = [];
 
+//Calculo del total para utilizar en el array carrito
 function calcularTotal(){
     for (producto of carrito){
         if (carrito.nombre = catalogo.nombre){
@@ -83,7 +87,13 @@ function calcularTotal(){
     }
 }
 
-const productoExiste = catalogo.some((inputNombre) => catalogo.nombre === inputNombre);
+let productoExiste;
+
+if (catalogo.some(el => el.nombre == inputNombre)){
+    productoExiste = true
+}
+
+console.log(inputNombre);
 
 if (productoExiste) {
     let producto = new Carrito(
@@ -93,6 +103,7 @@ if (productoExiste) {
         );
 
     carrito.push(producto);
+    console.log(carrito);
     formulario.reset();
 
     pintarProductos();
@@ -102,6 +113,7 @@ if (productoExiste) {
 
 const compraFinal = document.getElementById("compra-final");
 
+//Función para mostrar una tarjeta que obtenga los productos seleccionados por el usuario
 function mostrarCarrito() {
     compraFinal.innerHTML = "";
     carrito.forEach((item) => {
