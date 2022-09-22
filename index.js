@@ -40,7 +40,7 @@ function validarFormulario(event) {
     event.preventDefault();
     let nombre = inputNombre.value;
     let cantidad = parseInt(inputCantidad.value);
-    vender();
+    verificarProducto();
 }
 
 const catalogo = [];
@@ -51,21 +51,23 @@ catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));
 const mostrarProductos = document.getElementById("mostrar-productos");
 
 //Creación de las tarjetas para cada producto
-catalogo.forEach((producto) => {
-    let column = document.createElement("div");
-    column.className = "col-md-3 ml-2 mt-3";
-    column.id = `columna-${producto.id}`
-    column.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Nombre:<b>${producto.nombre}</b></p>
-                <p class="card-text">Precio:<b>${producto.precio}</b></p>
-                <p class="card-text">Cantidad:<b>${producto.cantidad}</b></p>
+function tarjetas(){
+    catalogo.forEach((producto) => {
+        let column = document.createElement("div");
+        column.className = "col-md-3 ml-2 mt-3";
+        column.id = `columna-${producto.id}`
+        column.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">Nombre:<b>${producto.nombre}</b></p>
+                    <p class="card-text">Precio:<b>${producto.precio}</b></p>
+                    <p class="card-text">Cantidad:<b>${producto.cantidad}</b></p>
+                </div>
             </div>
-        </div>
-    `
-    mostrarProductos.append(column)
-});
+        `
+        mostrarProductos.append(column)
+})
+};
 
 //Creación del objeto carrito que obtendrá los productos seleccionados por el usuario
 class Carrito{
@@ -89,26 +91,24 @@ function calcularTotal(){
 
 let productoExiste;
 
-if (catalogo.some(el => el.nombre == inputNombre)){
-    productoExiste = true
-}
-
-console.log(inputNombre);
-
-if (productoExiste) {
-    let producto = new Carrito(
+function verificarProducto(){
+    if (catalogo.some(el => el.nombre == inputNombre)){
+        productoExiste = true
+        let producto = new Carrito(
         nombre,
         cantidad,
         calcularTotal(),
         );
 
     carrito.push(producto);
-    console.log(carrito);
     formulario.reset();
 
-    pintarProductos();
+    mostrarCarrito();
+
+    return carrito;
 } else {
     alert("Ese producto no existe");
+}
 }
 
 const compraFinal = document.getElementById("compra-final");
@@ -142,10 +142,21 @@ function pagoCuotas(){
     alert("Su pago se realizara en 3 cuotas de " + montoCuota);
 }
 
-let cuotas = parseInt(prompt("¿Le gustaría pagar en tres cuotas sin interes? \n 1. Si \n 2. No"));
-
-if ((cuotas == 1)){  
-    pagoCuotas()
-} else {
-    alert("Seleccione su metodo de pago")
+function consulta(){
+    let cuotas = parseInt(prompt("¿Le gustaría pagar en tres cuotas sin interes? \n 1. Si \n 2. No"));
+    if ((cuotas == 1)){  
+        pagoCuotas()
+    } else {
+        alert("Seleccione su metodo de pago")
 }
+}
+
+function main (){
+    tarjetas();
+    inicializarElementos();
+    inicializarEventos();
+    verificarProducto();
+    consulta();
+}
+
+main();
