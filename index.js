@@ -78,7 +78,7 @@ class Carrito{
     constructor(nombre, cantidad, precioTotal){
         this.nombre = nombre;
         this.cantidad = parseInt(cantidad);
-        this.precioTotal = parseFloat(precioTotal);
+        this.precioTotal = parseInt(precioTotal);
     };
 }
 
@@ -86,9 +86,9 @@ let carrito = [];
 
 //Calculo del total para utilizar en el array carrito
 function calcularTotal(){
-    for (producto of carrito){
-        if (carrito.nombre == catalogo.nombre){
-                let precioTotal = carrito.cantidad * catalogo.precio;
+    for (product of carrito){
+        if (product.nombre == catalogo.nombre){
+                product.precioTotal = parseInt(product.cantidad * catalogo.precio);
         }
     }
 }
@@ -102,8 +102,8 @@ function verificarProducto(){
         inputNombre,
         inputCantidad
         );
-    calcularTotal();
     carrito.push(producto);
+    calcularTotal();
     formulario.reset();
 
     mostrarCarrito();
