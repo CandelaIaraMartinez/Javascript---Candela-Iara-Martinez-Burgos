@@ -25,28 +25,13 @@ aumentarStock = (cantidadAAumentar) =>
     (this.cantidad = this.cantidad + cantidadAAumentar);
 }
 
-function inicializarElementos() {
-    formulario = document.getElementById("formulario");
-    inputNombre = document.getElementById("inputNombreProducto");
-    inputCantidad = document.getElementById("inputCantidad");
-    contenedorProductos = document.getElementById("contenedorProductos");
-}
-
-function inicializarEventos() {
-    formulario.onsubmit = (event) => validarFormulario(event);
-}
-
-function validarFormulario(event) {
-    event.preventDefault();
-    let nombre = inputNombre.value;
-    let cantidad = parseInt(inputCantidad.value);
-    verificarProducto();
-}
-
-const catalogo = [];
-catalogo.push(new Catalogo("1", "Top Negro", "700", "10"))
+const catalogo = [  {id: 1, nombre: "Top Negro", precio: 700, cantidad: 10},
+                    {id: 2, nombre: "Short de Jean", precio: 900,cantidad: 23},
+                    {id: 3, nombre: "Buzo Oversize", precio: 2500, cantidad: 13}
+];
+/*catalogo.push(new Catalogo("1", "Top Negro", "700", "10"))
 catalogo.push(new Catalogo("2", "Short de Jean", "900", "23"))
-catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));
+catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));*/
 
 const mostrarProductos = document.getElementById("mostrar-productos");
 
@@ -68,6 +53,25 @@ function tarjetas(){
         mostrarProductos.append(column)
 })
 };
+
+function inicializarElementos() {
+    formulario = document.getElementById("formulario");
+    inputNombre = document.getElementById("input-nombre");
+    inputCantidad = document.getElementById("input-cantidad");
+    contenedorProductos = document.getElementById("contenedor-productos");
+}
+
+function inicializarEventos() {
+    formulario.onsubmit = (event) => validarFormulario(event);
+}
+
+function validarFormulario(event) {
+    event.preventDefault();
+    inputNombre = inputNombre.value;
+    inputCantidad = parseInt(inputCantidad.value);
+    console.log(inputNombre);
+    verificarProducto();
+}
 
 //Creación del objeto carrito que obtendrá los productos seleccionados por el usuario
 class Carrito{
@@ -155,8 +159,6 @@ function main (){
     tarjetas();
     inicializarElementos();
     inicializarEventos();
-    verificarProducto();
-    consulta();
 }
 
 main();
