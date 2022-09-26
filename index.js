@@ -29,9 +29,6 @@ const catalogo = [  {id: 1, nombre: "Top Negro", precio: 700, cantidad: 10},
                     {id: 2, nombre: "Short de Jean", precio: 900,cantidad: 23},
                     {id: 3, nombre: "Buzo Oversize", precio: 2500, cantidad: 13}
 ];
-/*catalogo.push(new Catalogo("1", "Top Negro", "700", "10"))
-catalogo.push(new Catalogo("2", "Short de Jean", "900", "23"))
-catalogo.push(new Catalogo("3", "Buzo Oversize", "2500", "13"));*/
 
 const mostrarProductos = document.getElementById("mostrar-productos");
 
@@ -69,7 +66,6 @@ function validarFormulario(event) {
     event.preventDefault();
     inputNombre = inputNombre.value;
     inputCantidad = parseInt(inputCantidad.value);
-    console.log(inputNombre);
     verificarProducto();
 }
 
@@ -94,6 +90,15 @@ function calcularTotal(){
 }
 
 let productoExiste;
+
+function eventoInputs(e){
+    inputNombre.addEventListener(`input`, () => {
+        console.log(inputNombre.value)
+    })
+    inputCantidad.addEventListener(`input`, () => {
+        console.log(inputCantidad.value)
+    }) 
+}
 
 function verificarProducto(){
     if (catalogo.some(el => el.nombre == inputNombre)){
@@ -158,6 +163,7 @@ function main (){
     tarjetas();
     inicializarElementos();
     inicializarEventos();
+    eventoInputs();
 }
 
 main();
