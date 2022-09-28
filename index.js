@@ -91,13 +91,11 @@ function calcularTotal(){
 
 let productoExiste;
 
-function eventoInputs(e){
-    inputNombre.addEventListener(`input`, () => {
-        console.log(inputNombre.value)
-    })
-    inputCantidad.addEventListener(`input`, () => {
-        console.log(inputCantidad.value)
-    }) 
+let boton = document.getElementById("button")
+boton.addEventListener("click", eventoInputs)
+function eventoInputs(){
+    console.log(inputNombre.value)
+    console.log(inputCantidad.value)
 }
 
 function verificarProducto(){
@@ -146,7 +144,7 @@ function mostrarCarrito() {
 }
 
 function pagoCuotas(){
-    let montoCuota = total / 3; 
+    let montoCuota = carrito[precioTotal] / 3; 
     alert("Su pago se realizara en 3 cuotas de " + montoCuota);
 }
 
@@ -163,7 +161,6 @@ function main (){
     tarjetas();
     inicializarElementos();
     inicializarEventos();
-    eventoInputs();
 }
 
 main();
