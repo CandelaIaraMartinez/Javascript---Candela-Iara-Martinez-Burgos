@@ -143,6 +143,11 @@ function mostrarCarrito() {
     });
 }
 
+const carritoLocal = (clave, valor) => {localStorage.setItem(clave, valor)} ;
+for(const producto of carrito){
+    carritoLocal(producto.nombre, JSON.stringify(producto));
+}
+
 function pagoCuotas(){
     let montoCuota = carrito[precioTotal] / 3; 
     alert("Su pago se realizara en 3 cuotas de " + montoCuota);
