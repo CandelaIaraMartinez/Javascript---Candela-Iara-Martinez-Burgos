@@ -82,9 +82,11 @@ let carrito = [];
 
 //Calculo del total para utilizar en el array carrito
 function calcularTotal(){
-    for (product of carrito){
-        if (product.nombre == catalogo.nombre){
-                product.precioTotal = parseInt(product.cantidad * catalogo.precio);
+    for (let nombre of catalogo){
+        for (let product of carrito){
+            if (product.nombre == nombre.nombre){
+                    product.precioTotal = parseInt(product.cantidad * nombre.precio);
+            }
         }
     }
 }
@@ -112,9 +114,9 @@ function verificarProducto(){
     mostrarCarrito();
     consulta();
     return carrito;
-} else {
+    } else {
     alert("Ese producto no existe");
-}
+    }
 }
 
 const compraFinal = document.getElementById("compra-final");
@@ -144,9 +146,21 @@ function mostrarCarrito() {
 }
 
 let productosJSON = JSON.stringify(catalogo);
-localStorage.setItem("carrito", productosJSON);
-let carritoLocal = localStorage.getItem("carrito");
-console.log(productosJSON, typeof carritoLocal, carritoLocal);
+localStorage.setItem("productosJSON", productosJSON);
+console.log(productosJSON); 
+
+function actualizarCarritoStorage() {
+    let carritoJSON = JSON.stringify(carrito);
+    localStorage.setItem("carritoJSON", carritoJSON);
+}
+
+function obtenerCarritoStorage() {
+    let carritoJSON = localStorage.getItem("carritoJSON");
+    if (carritoJSON) {
+        carrito = JSON.parse(carritoJSON);
+        console.log(carritoJSON);
+    }
+}
 
 function pagoCuotas(){
     let montoCuota = carrito[precioTotal] / 3; 
@@ -162,10 +176,11 @@ function consulta(){
 }
 }
 
-function main (){
+function main() {
     tarjetas();
     inicializarElementos();
     inicializarEventos();
+    obtenerCarritoStorage();
 }
 
 main();
