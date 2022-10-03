@@ -1,6 +1,7 @@
 let formulario;
 let inputNombre;
 let inputCantidad;
+const recuperarCarrito = JSON.parse(localStorage.getItem("carritoJSON")) || [];
 
 //Creación del catálogo que contiene las prendas disponibles
 class Catalogo{
@@ -12,11 +13,7 @@ class Catalogo{
     }
 
 vender(){
-    if (this.cantidad > 0){
-        this.disminuirStock(1);
-    } else {
-        alert("No contamos con stock del producto actualmente")
-    }
+    this.cantidad > 0 ? this.disminuirStock(1) : alert("No contamos con stock del producto actualmente");
 }
 
 disminuirStock = (cantidadADisminuir) =>
@@ -169,11 +166,7 @@ function pagoCuotas(){
 
 function consulta(){
     let cuotas = parseInt(prompt("¿Le gustaría pagar en tres cuotas sin interes? \n 1. Si \n 2. No"));
-    if ((cuotas == 1)){  
-        pagoCuotas()
-    } else {
-        alert("Seleccione su metodo de pago")
-}
+    cuotas == 1 ?  pagoCuotas() : alert("Seleccione su metodo de pago");
 }
 
 function main() {
