@@ -13,7 +13,7 @@ class Catalogo{
     }
 
 vender(){
-    this.cantidad > 0 ? this.disminuirStock(1) : alert("No contamos con stock del producto actualmente");
+    this.cantidad > 0 ? this.disminuirStock(1) : Swal.fire({ title: "Sin stock", text:"No contamos con stock del producto actualmente, por favor seleccione otro.", icon:"error", confirmButtonText: "Ok" });
 }
 
 disminuirStock = (cantidadADisminuir) =>
@@ -112,7 +112,12 @@ function verificarProducto(){
     consulta();
     return carrito;
     } else {
-    alert("Ese producto no existe");
+    Swal.fire({
+        title:"Error",
+        text: "Ese producto no existe",
+        icon: "error",
+        confirmButtonText: "Ok",
+    })
     }
 }
 
