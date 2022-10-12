@@ -1,4 +1,4 @@
-√let formulario;
+let formulario;
 let inputNombre;
 let inputCantidad;
 const recuperarCarrito = JSON.parse(localStorage.getItem("carritoJSON")) || [];
