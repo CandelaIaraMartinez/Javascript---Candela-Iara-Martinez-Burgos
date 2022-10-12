@@ -165,6 +165,7 @@ function main() {
     tarjetas();
     inicializarElementos();
     inicializarEventos();
+    actualizarCarritoStorage();
     obtenerCarritoStorage();
 }
 
