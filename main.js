@@ -13,7 +13,7 @@ console.log(arrayProductos);
 
 // Mostrar productos
 arrayProductos.forEach(producto => {
-    contenedorProductos.innerHTML = `
+    contenedorProductos.innerHTML += `
     <div class="shop-item card" style="width: 18rem;"" id="${producto.id}">
         <img class="shop-item-imagen card-img-top" src="${producto.image}">
         <div class="card-body">
@@ -71,7 +71,7 @@ function obtenerTotal(){
         sumaTotal = sum + producto.cantidad*producto.price;
         return sumaTotal;
     }, 0);
-    elementoTotal.innerText = `Total : $${total}`;
+    elementoTotal.innerText = `Total : $${total.toFixed(2)}`;
 }
 
 function pintarProductos(){
@@ -83,7 +83,7 @@ function pintarProductos(){
                         <img class="carrito-item-imagen" src="${item.image}" width="100" height="100">
                     <span class="carrito-item-titulo">${item.title}</span>
                     </div>
-                    <span class="col-sm carrito-precio carrito-column">Precio: ${item.price}</span>
+                    <span class="col-sm carrito-precio carrito-column">Precio: ${item.price.toFixed(2)}</span>
                     <div class="col-sm carrito-cantidad">Cantidad: 
                         <input class="carrito-cantidad-input" min="1" type="number" value="${item.cantidad}"> 
                         <button class="btn btn-danger" type="button">Descartar</button>
@@ -113,9 +113,9 @@ function descartarProducto(){
     botonDescartar = [...botonDescartar];
     botonDescartar.forEach(btn =>{
         btn.addEventListener(`click`, event=>{
-            let tituloActual = event.target.parentElement.parentElement.childNodes[1].innerText;
-            let objetoActual = arrayCarrito.find(item => item.title == tituloActual);
-            arrayCarrito = arrayCarrito.filter(item => item != objetoActual);
+            let tituloActual = event.target.parentElement.parentElement.childNodes[1].innerText.split(":")[1].trim();
+            tituloActual == 'Mens Casual Premium Slim Fit T-Shirts' ? tituloActual = 'Mens Casual Premium Slim Fit T-Shirts' : tituloActual;
+            arrayCarrito = arrayCarrito.filter(item => item.title == tituloActual);
             pintarProductos();
             obtenerTotal();
             actualizarCantidad();
