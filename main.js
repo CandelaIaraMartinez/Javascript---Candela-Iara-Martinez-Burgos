@@ -3,6 +3,7 @@ let arrayCarrito = [];
 let total = 0;
 let contenedorProductos = document.querySelector(".shop-items");
 let elementoTotal = document.querySelector(".carrito-total-titulo");
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // Petición de productos 
 let res = await fetch('https://fakestoreapi.com/products?limit=5')
@@ -121,4 +122,9 @@ function descartarProducto(){
             actualizarCantidad();
         })
     })
+}
+
+//Agregar items al local storage
+const guardarLocal = () => {
+localStorage.setItem("arrayCarrito", JSON.stringify(carrito));
 }
